@@ -1,32 +1,108 @@
 #include <stdio.h>
+#include <string.h>
 
-// Desafio de Xadrez - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de movimentação das peças de xadrez.
-// O objetivo é utilizar estruturas de repetição e funções para determinar os limites de movimentação dentro do jogo.
+void moviment(char *moviment)
+{
+  if (strcmp(moviment, "top") == 0)
+  {
+    printf("Cima\n");
+  }
+  else if (strcmp(moviment, "bottom") == 0)
+  {
+    printf("Baixo\n");
+  }
+  else if (strcmp(moviment, "left") == 0)
+  {
+    printf("Esquerda\n");
+  }
+  else if (strcmp(moviment, "right") == 0)
+  {
+    printf("Direita\n");
+  }
+}
 
-int main() {
-    // Nível Novato - Movimentação das Peças
-    // Sugestão: Declare variáveis constantes para representar o número de casas que cada peça pode se mover.
+void rook(int moviments)
+{
+  if (moviments == 0)
+    return;
+  moviment("right");
+  rook(moviments - 1);
+}
 
-    // Implementação de Movimentação do Bispo
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação do Bispo em diagonal.
+void bishopRecursive(int moviments)
+{
+  if (moviments == 0)
+    return;
+  moviment("top");
+  moviment("right");
+  bishopRecursive(moviments - 1);
+}
 
-    // Implementação de Movimentação da Torre
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Torre para a direita.
+void bishopLoop(int moviments)
+{
+  for (int i = 0; i < moviments; i++)
+  {
+    moviment("top");
+    for (int j = 0; j < moviments; j++)
+    {
+      if (i == j)
+        moviment("right");
+    }
+  }
+}
 
-    // Implementação de Movimentação da Rainha
-    // Sugestão: Utilize uma estrutura de repetição para simular a movimentação da Rainha para a esquerda.
+void queen(int moviments)
+{
+  if (moviments == 0)
+    return;
+  moviment("left");
+  queen(moviments - 1);
+}
 
-    // Nível Aventureiro - Movimentação do Cavalo
-    // Sugestão: Utilize loops aninhados para simular a movimentação do Cavalo em L.
-    // Um loop pode representar a movimentação horizontal e outro vertical.
+void khight()
+{
+  int i = 0;
+  do
+  {
+    moviment("top");
+    i++;
+  } while (i < 3);
+}
 
-    // Nível Mestre - Funções Recursivas e Loops Aninhados
-    // Sugestão: Substitua as movimentações das peças por funções recursivas.
-    // Exemplo: Crie uma função recursiva para o movimento do Bispo.
+void kight()
+{
+  for (int i = 0; i < 3; i++)
+  {
+    while (i == 2)
+    {
+      moviment("left");
+      return;
+    }
+    moviment("bottom");
+  }
+}
 
-    // Sugestão: Implemente a movimentação do Cavalo utilizando loops com variáveis múltiplas e condições avançadas.
-    // Inclua o uso de continue e break dentro dos loops.
+int main()
+{
+  printf("Torre:\n");
+  rook(5);
+  printf("\n");
 
-    return 0;
+  printf("Bispo recursivo:\n");
+  bishopRecursive(5);
+  printf("\n");
+
+  printf("Bispo loop:\n");
+  bishopLoop(5);
+  printf("\n");
+
+  printf("Rainha:\n");
+  queen(8);
+  printf("\n");
+
+  printf("Cavalo:\n");
+  kight();
+  printf("\n");
+
+  return 0;
 }
